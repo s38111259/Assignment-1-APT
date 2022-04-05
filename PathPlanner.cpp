@@ -25,7 +25,7 @@ PathPlanner::~PathPlanner(){
 void PathPlanner::initialPosition(int row, int col){
    for (int i = 0; i < row; ++i){
        for (int j = 0; j < col; ++j){
-           if(env[i][j]=='S'){
+           if(env[i][j]==SYMBOL_START){
                 Node* StartNode = new Node(i, j, 0);
                 openList->addBack(StartNode);
             }            
@@ -34,51 +34,51 @@ void PathPlanner::initialPosition(int row, int col){
 }
 
 //checks for empty places where robot can go
-bool PathPlanner::is_a_dot_there(Node* node, Env env){
+bool PathPlanner::is_a_Dot_There(Node* node, Env env){
     int i = node->getRow();
     int j = node->getCol();
-    if(env[i][j] == '.'){
+    if(env[i][j] == SYMBOL_EMPTY){
         return true;
     }
     return false;
 }
 
 //checks if Goal 'G' is there or not
-bool PathPlanner::is_goal_there(Node* node, Env env){
+bool PathPlanner::is_Goal_There(Node* node, Env env){
     int i = node->getRow();
     int j = node->getCol();
-    if(env[i][j] == 'G'){
+    if(env[i][j] == SYMBOL_GOAL){
         return true;
     }
     return false;
 }
 
 //Checks and Adds the nodes available around the current location of Robot
-void PathPlanner::available_Nodes(Node* p, Env env){
+void PathPlanner::availableNodes(Node* p, Env env){
     Node* up = new Node(p->getRow()-1,p->getCol(),p->getDistanceToS()+1);       //These are actually node q
     Node* right = new Node(p->getRow(), p->getCol()+1,p->getDistanceToS()+1);
     Node* down = new Node(p->getRow()+1,p->getCol(),p->getDistanceToS()+1);
     Node* left = new Node(p->getRow(),p->getCol()-1,p->getDistanceToS()+1);
 
-    if(is_a_dot_there(up, env) || is_goal_there(up, env)){
+    if(is_a_Dot_There(up, env) || is_Goal_There(up, env)){
         if (!check_q_in_OpenList(up)){
             openList->addBack(up);
         }
     }
 
-    if(is_a_dot_there(right,env) || is_goal_there(right, env)){
+    if(is_a_Dot_There(right,env) || is_Goal_There(right, env)){
         if (!check_q_in_OpenList(right)){
             openList->addBack(right);
         }
     }
 
-    if(is_a_dot_there(down,env) || is_goal_there(down, env)){
+    if(is_a_Dot_There(down,env) || is_Goal_There(down, env)){
         if (!check_q_in_OpenList(down)){
             openList->addBack(down);
         }
     } 
 
-    if(is_a_dot_there(left,env) || is_goal_there(left, env)){
+    if(is_a_Dot_There(left,env) || is_Goal_There(left, env)){
         if (!check_q_in_OpenList(left)){
             openList->addBack(left);
         }
@@ -88,25 +88,25 @@ void PathPlanner::available_Nodes(Node* p, Env env){
     // When it sees the Goal node, it adds it into 'getpathList' and thus 'getpathList' is initialized and
     // contains only one node that is the goal node at 0th index which helps in backtracking.
 
-    if(is_goal_there(up, env)){
+    if(is_Goal_There(up, env)){
         if (!check_q_in_PathList(up)){
             getpathList->addBack(up);
         }
     }
 
-    if(is_goal_there(right,env)){
+    if(is_Goal_There(right,env)){
         if (!check_q_in_PathList(right)){
             getpathList->addBack(right);
         }
     }
 
-    if(is_goal_there(down,env)){
+    if(is_Goal_There(down,env)){
         if (!check_q_in_PathList(down)){
             getpathList->addBack(down);
         }
     } 
 
-    if(is_goal_there(left,env)){
+    if(is_Goal_There(left,env)){
         if (!check_q_in_PathList(left)){
             getpathList->addBack(left);
         }
@@ -114,43 +114,43 @@ void PathPlanner::available_Nodes(Node* p, Env env){
  }
 
 //Returns the count of available nodes present around the current location.
-int PathPlanner::get_available_node_count(Node* p, Env env) {
+int PathPlanner::getAvailableNodeCount(Node* p, Env env) {
     int count =0;
     Node* up = new Node(p->getRow()-1,p->getCol(),0);                           //These are actually node q
     Node* right = new Node(p->getRow(), p->getCol()+1,0);
     Node* down = new Node(p->getRow()+1,p->getCol(),0);
     Node* left = new Node(p->getRow(),p->getCol()-1,0);
 
-    if((is_a_dot_there(up, env) || is_goal_there(up, env))&& !check_q_in_OpenList(up)){
+    if((is_a_Dot_There(up, env) || is_Goal_There(up, env))&& !check_q_in_OpenList(up)){
         ++count;
     }
 
-    if((is_a_dot_there(right,env) || is_goal_there(right, env))&& !check_q_in_OpenList(right)){
+    if((is_a_Dot_There(right,env) || is_Goal_There(right, env))&& !check_q_in_OpenList(right)){
         ++count;
     } 
 
-    if((is_a_dot_there(down,env) || is_goal_there(down, env))&& !check_q_in_OpenList(down)){
+    if((is_a_Dot_There(down,env) || is_Goal_There(down, env))&& !check_q_in_OpenList(down)){
         ++count;
     }
 
-    if((is_a_dot_there(left,env) || is_goal_there(left, env)) && !check_q_in_OpenList(left)){
+    if((is_a_Dot_There(left,env) || is_Goal_There(left, env)) && !check_q_in_OpenList(left)){
         ++count;
     }
 
     //Milestone 3 Implementation
-    if(is_goal_there(up, env) && !check_q_in_PathList(up)){
+    if(is_Goal_There(up, env) && !check_q_in_PathList(up)){
         ++count;
     }
 
-    if(is_goal_there(right,env) && !check_q_in_PathList(right)){
+    if(is_Goal_There(right,env) && !check_q_in_PathList(right)){
         ++count;
     } 
 
-    if(is_goal_there(down,env) && !check_q_in_PathList(down)){
+    if(is_Goal_There(down,env) && !check_q_in_PathList(down)){
         ++count;
     }
 
-    if(is_goal_there(left,env) && !check_q_in_PathList(left)){
+    if(is_Goal_There(left,env) && !check_q_in_PathList(left)){
         ++count;
     }
     return count;
@@ -165,8 +165,8 @@ NodeList* PathPlanner::getReachableNodes(){
     Node* p = openList->get(0);
 
     do{
-        for (int i = 0; i < get_available_node_count(p, env); ++i){
-            available_Nodes(p, env);
+        for (int i = 0; i < getAvailableNodeCount(p, env); ++i){
+            availableNodes(p, env);
         }
         closeList->addBack(p);
         p = get_Node_fOpen_NClose();
@@ -229,19 +229,19 @@ void PathPlanner::getPathNodes(Node* p, Env env) {
     Node* down = new Node(p->getRow()+1,p->getCol(),p->getDistanceToS());
     Node* left = new Node(p->getRow(),p->getCol()-1,p->getDistanceToS());
 
-    if (is_a_dot_there(up, env) && !check_q_in_PathList(up) && check_q_in_OpenList(up)){
+    if (is_a_Dot_There(up, env) && !check_q_in_PathList(up) && check_q_in_OpenList(up)){
         getpathList->addBack(up);
     }
 
-    if (is_a_dot_there(right, env) && !check_q_in_PathList(right) && check_q_in_OpenList(right)){
+    if (is_a_Dot_There(right, env) && !check_q_in_PathList(right) && check_q_in_OpenList(right)){
         getpathList->addBack(right);
     }
 
-    if (is_a_dot_there(down, env) && !check_q_in_PathList(down) && check_q_in_OpenList(down)){
+    if (is_a_Dot_There(down, env) && !check_q_in_PathList(down) && check_q_in_OpenList(down)){
         getpathList->addBack(down);
     }
 
-    if (is_a_dot_there(left, env) && !check_q_in_PathList(left) && check_q_in_OpenList(left)){
+    if (is_a_Dot_There(left, env) && !check_q_in_PathList(left) && check_q_in_OpenList(left)){
         getpathList->addBack(left);
     }
 }
@@ -253,19 +253,19 @@ int PathPlanner::getPathNodesCount(Node* p, Env env) {
     Node* down = new Node(p->getRow()+1,p->getCol(),p->getDistanceToS());
     Node* left = new Node(p->getRow(),p->getCol()-1,p->getDistanceToS());
 
-    if(is_a_dot_there(up, env) && !check_q_in_PathList(up) && check_q_in_OpenList(up)){
+    if(is_a_Dot_There(up, env) && !check_q_in_PathList(up) && check_q_in_OpenList(up)){
         ++count;
     }
 
-    if(is_a_dot_there(right, env) && !check_q_in_PathList(right) && check_q_in_OpenList(right)){
+    if(is_a_Dot_There(right, env) && !check_q_in_PathList(right) && check_q_in_OpenList(right)){
         ++count;
     } 
 
-    if(is_a_dot_there(down, env) && !check_q_in_PathList(down) && check_q_in_OpenList(down)){
+    if(is_a_Dot_There(down, env) && !check_q_in_PathList(down) && check_q_in_OpenList(down)){
         ++count;
     }
 
-    if(is_a_dot_there(left, env) && !check_q_in_PathList(left) && check_q_in_OpenList(left)){
+    if(is_a_Dot_There(left, env) && !check_q_in_PathList(left) && check_q_in_OpenList(left)){
         ++count;
     }
     return count;

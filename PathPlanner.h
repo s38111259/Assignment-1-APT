@@ -39,10 +39,10 @@ public:
    /*                                           */
    /* YOU MAY ADD YOUR MODIFICATIONS HERE       */
    /*                                           */
-   bool is_a_dot_there(Node* node, Env env);
-   bool is_goal_there(Node* node, Env env);
-   void available_Nodes(Node* p, Env env);
-   int get_available_node_count(Node* p, Env env);
+   bool is_a_Dot_There(Node* node, Env env);
+   bool is_Goal_There(Node* node, Env env);
+   void availableNodes(Node* p, Env env);
+   int getAvailableNodeCount(Node* p, Env env);
    bool check_q_in_OpenList(Node* q);
    bool check_q_in_PathList(Node* q);
    Node* get_Node_fOpen_NClose();
