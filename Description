@@ -1,0 +1,8 @@
+For Milestone 1:
+I tried to use simple tests at first and then some complicated ones.
+
+For Milestone 2:
+Based on the given algorithm, all the methods were created. There were many challenges as at first I didn't know how will Robot check his neighbouring nodes but then I created 4 new node pointer and pointed them to its neighbouring locations.
+
+For Milestone 3:
+It was a bit difficult at first but as I started working on it, things become easier. At first, I tried to implement the same algorithm given in Milestone 2 but it didn't work so then I used some of the logic from Milestone 2 and solved the path. The main issue I was facing was, my program was just changing all the available nodes to direction rather than changing only the path which is going till Start Node ("Going to StartNode because I was working in opposite direction FROM Goal TO Start). But then, i  modified my code to work on the basis of Distance of Nodes and this how it worked and returned the Path (Shortest Path) which is going till Start. This returns the Shortest Path and there is also a Test to verify this. After this, I faced some issues in giving direction but then I reversed my Nodelist FROM Goal -> Start TO Start -> Goal.
