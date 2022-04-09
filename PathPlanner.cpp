@@ -156,28 +156,7 @@ int PathPlanner::getAvailableNodeCount(Node* p, Env env) {
     return count;
  }
 
-
-// Method for Milestone 2
-// Return a DEEP COPY of the NodeList of all node's 
-// that the robot can reach
-NodeList* PathPlanner::getReachableNodes(){
-    initialPosition(rows, cols);
-    Node* p = openList->get(0);
-
-    do{
-        for (int i = 0; i < getAvailableNodeCount(p, env); ++i){
-            availableNodes(p, env);
-        }
-        closeList->addBack(p);
-        p = get_Node_fOpen_NClose();
-    } while (p!=nullptr);
-
-    //Deep Copy
-    NodeList* copyOpenList = new NodeList(*openList);
-    return copyOpenList;
-}
-
-//Return nodes available in Open List and not in Close List
+ //Return nodes available in Open List and not in Close List
 Node* PathPlanner::get_Node_fOpen_NClose() {
     for (int i = 0; i < openList->getLength(); ++i){
         if (closeList->containsNode(openList->get(i))){
@@ -205,6 +184,28 @@ bool PathPlanner::check_q_in_OpenList(Node* q){
     return check;
 }
 
+// Method for Milestone 2
+// Return a DEEP COPY of the NodeList of all node's 
+// that the robot can reach
+NodeList* PathPlanner::getReachableNodes(){
+    initialPosition(rows, cols);
+    Node* p = openList->get(0);
+
+    do{
+        for (int i = 0; i < getAvailableNodeCount(p, env); ++i){
+            availableNodes(p, env);
+        }
+        closeList->addBack(p);
+        p = get_Node_fOpen_NClose();
+    } while (p!=nullptr);
+
+    //Deep Copy
+    NodeList* copyOpenList = new NodeList(*openList);
+    return copyOpenList;
+}
+
+
+//Milestone 3 Implementation
 //Checks if Node is in Path List or not
 bool PathPlanner::check_q_in_PathList(Node* q){
     bool check = false;
@@ -222,7 +223,6 @@ bool PathPlanner::check_q_in_PathList(Node* q){
 }
 
 
-//Milestone 3 Implementation
 void PathPlanner::getPathNodes(Node* p, Env env) {
     Node* up = new Node(p->getRow()-1,p->getCol(),p->getDistanceToS());     
     Node* right = new Node(p->getRow(), p->getCol()+1,p->getDistanceToS());
@@ -270,8 +270,6 @@ int PathPlanner::getPathNodesCount(Node* p, Env env) {
     }
     return count;
 }
-
-
 
 NodeList* PathPlanner::getPath(){
     Node* endNode = getpathList->get(0);

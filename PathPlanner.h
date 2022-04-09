@@ -39,14 +39,33 @@ public:
    /*                                           */
    /* YOU MAY ADD YOUR MODIFICATIONS HERE       */
    /*                                           */
+
+   //Checks for Empty spaces
    bool is_a_Dot_There(Node* node, Env env);
+
+   //Checks for the Goal Position/Node
    bool is_Goal_There(Node* node, Env env);
+
+   //Method for Milestone 2
+   // Adds available nodes present around the particular node to OpenList
    void availableNodes(Node* p, Env env);
+
+   //Return the count of available nodes present around the particular nodes
    int getAvailableNodeCount(Node* p, Env env);
+
+   //Checks if Node is present in OpenList or not
    bool check_q_in_OpenList(Node* q);
+
+   //Checks if Node is present in PathList or not
    bool check_q_in_PathList(Node* q);
+
+   //Return Node present in OpenList that is not present in CloseList
    Node* get_Node_fOpen_NClose();
+
+   //Adds available Nodes to getpathList
    void getPathNodes(Node* p, Env env);
+
+   //Return the count of available nodes present around the particular nodes
    int getPathNodesCount(Node* p, Env env);
 
 

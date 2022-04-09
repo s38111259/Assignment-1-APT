@@ -9,7 +9,6 @@ NodeList::NodeList(){
    }
 }
 
-
 NodeList::~NodeList(){
    
 }
@@ -26,7 +25,6 @@ NodeList::NodeList(NodeList& other){
 int NodeList::getLength(){
    return length;
 }
-
 
 NodePtr NodeList::get(int i){
    return nodes[i];
